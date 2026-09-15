@@ -22,7 +22,7 @@ Labels include `bug`, `enhancement`, `documentation`, `dependencies`, `github-ac
 
 `.github/dependabot.yml` groups weekly updates by ecosystem, including Actions.
 Actions use immutable commit SHAs with version comments. Dependabot updates those
-pins. The Docker image follows the maintained Node 24 tag; review major runtime
+pins. The Docker image follows the current Node 26 tag; review major runtime
 updates together with the CI matrix and runtime documentation.
 
 The auto-merge workflow enables squash auto-merge for patch/minor updates. GitHub

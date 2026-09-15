@@ -33,7 +33,7 @@ The Dockerfile and Compose configuration are supplied, including a health check,
 
 ## Run directly
 
-Node 22.16+ or Node 24. The ZIP attached to a [GitHub release](https://github.com/JerrettDavis/symbiosis-lab/releases) includes the already-compiled `dist/` directory, so this works without installing dependencies:
+Node 22.16+, 24, or 26. The ZIP attached to a [GitHub release](https://github.com/JerrettDavis/symbiosis-lab/releases) includes the already-compiled `dist/` directory, so this works without installing dependencies:
 
 ```sh
 npm start
