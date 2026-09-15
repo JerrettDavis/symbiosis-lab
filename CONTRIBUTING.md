@@ -5,7 +5,7 @@ Symbiosis Lab is an experimental artificial-life sandbox. Small, reproducible ch
 ## Development
 
 1. Fork and clone [the repository](https://github.com/JerrettDavis/symbiosis-lab).
-2. Install Node 22.16+ (Node 24 recommended).
+2. Install Node 22.16+ (Node 24 LTS or Node 26 current).
 3. Run `npm ci`, then `npm run verify`.
 4. Run `npm run dev` and open http://localhost:8080.
 5. Create a branch, make a focused change, and open a pull request against `main`.
@@ -20,7 +20,7 @@ checkpoints, environment files, and session notes are excluded from Git.
 - Container changes: run `npm run test:docker` with a running Docker daemon.
 - Packaging changes: run `python scripts/test-package.py` and `python scripts/package.py` after building.
 
-CI tests Node 22 and 24 on Linux and Windows, Chromium desktop/mobile, Docker
+CI tests Node 22, 24, and 26 on Linux and Windows, Chromium desktop/mobile, Docker
 checkpoint recovery, and clean release extraction. The `Required checks` status
 must pass before merging. Keep deterministic replay, energy accounting, snapshot
 validation, and the engine's isolation from host state intact.

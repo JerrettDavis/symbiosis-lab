@@ -5,7 +5,7 @@
 [GitHub Actions](https://github.com/JerrettDavis/symbiosis-lab/actions/workflows/ci.yml)
 is the source of current verification results. Every push to `main` and pull request runs:
 
-- Node 22 and 24 on Ubuntu and Windows: clean `npm ci`, strict compilation,
+- Node 22, 24, and 26 on Ubuntu and Windows: clean `npm ci`, strict compilation,
   45 engine/HTTP tests, real-process persistence/restart smoke, and `npm audit`.
 - Native Chromium navigation on desktop/mobile: controls, signal intervention,
   inspection, knockout, checkpoints, JSON download/import, help, and layout checks.
