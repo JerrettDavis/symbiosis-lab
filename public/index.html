@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101715"><title>Symbiosis Lab | Artificial life sandbox</title>
+  <link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
+  <script type="module" src="/web/app.js"></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Symbiosis home"><img src="/mark.svg" alt="" width="36" height="36"><span>symbiosis<span class="brand-suffix"> / lab</span></span></a>
+  <div class="top-meta"><span class="version">ARTIFICIAL LIFE · ALPHA 0.1</span><button id="guide-open" class="quiet">Field guide <span aria-hidden="true">↗</span></button><span class="status" id="connection" role="status">Connecting</span></div>
+</header>
+<main>
+  <section class="intro"><div><div class="eyebrow">EXPERIMENT 001 / ADAPTIVE CELLS</div><h1>Local rules. Collective behavior.</h1><p>A small world of resources, signals, and inherited change. No central controller.</p></div><div class="session"><span id="session-seed">SEED 42</span><strong id="tick">000,000</strong><span>SIMULATION TICKS</span></div></section>
+  <section class="metrics" aria-label="World metrics">
+    <article><span class="metric-label">Living cells</span><strong id="population">—</strong><small id="population-note">Waiting for world</small></article>
+    <article><span class="metric-label">Mean energy</span><strong id="energy">—</strong><small>Available energy / cell</small></article>
+    <article><span class="metric-label">Generation</span><strong id="generation">—</strong><small>Deepest living descendant</small></article>
+    <article><span class="metric-label">Founder lines</span><strong id="lineages">—</strong><small>Surviving founder ancestry</small></article>
+    <article><span class="metric-label">Trait spread</span><strong id="spread">—</strong><small>Normalized variation, not fitness</small></article>
+    <article><span class="metric-label">Mutated loci</span><strong id="mutations">—</strong><small>Cumulative changes at birth</small></article>
+  </section>
+  <div class="workbench">
+    <aside class="panel controls">
+      <div class="panel-title"><h2>Environment</h2><span class="section-num">01</span></div>
+      <label class="field-label" for="preset">Starting conditions</label>
+      <select id="preset"><option value="meadow">Open meadow</option><option value="scarcity">Resource scarcity</option><option value="seasons">Seasonal world</option></select>
+      <div class="seed-row"><div><label class="field-label" for="seed">Random seed</label><input id="seed" type="number" value="42" min="0" max="4294967295" step="1"></div><button id="reset" title="Replace the current world with a seeded run">New run</button></div>
+      <div class="divider"></div>
+      <div class="range-head"><label for="supply">Nutrient input</label><output id="supply-value">0.018</output></div>
+      <input id="supply" type="range" min="0" max="0.06" step="0.001" value="0.018"><p class="hint">Peak resource units / site / tick. Zero input is not zero stored food.</p>
+      <div class="range-head"><label for="mutation">Mutation / locus</label><output id="mutation-value">4.5%</output></div>
+      <input id="mutation" type="range" min="0" max="0.3" step="0.005" value="0.045"><p class="hint">Chance of changing each inherited trait or controller weight at birth.</p>
+      <div class="divider"></div>
+      <label class="toggle-row"><span>Chemical signaling<small>Emit and receive A / B</small></span><input id="signals" type="checkbox" checked role="switch"></label>
+      <label class="toggle-row"><span>Receptor adaptation<small>Lifetime state, not inherited</small></span><input id="plasticity" type="checkbox" checked role="switch"></label>
+      <label class="toggle-row"><span>Neighbor sharing<small>Energy transfers have a cost</small></span><input id="sharing" type="checkbox" checked role="switch"></label>
+      <label class="toggle-row"><span>Seasonal input<small>900-tick resource cycle</small></span><input id="season" type="checkbox" role="switch"></label>
+      <div class="divider"></div>
+      <div class="field-label">CHECKPOINTS</div>
+      <div class="button-pair"><button id="save">Save</button><button id="load">Restore</button></div>
+      <div class="button-pair"><a class="button quiet" href="/api/snapshot" download>Export JSON ↗</a><button id="import" class="quiet">Import JSON ↙</button><input type="file" id="snapshot-file" accept=".json,application/json" hidden></div>
+      <p class="hint" id="save-note">Autosaves every 30 seconds and on graceful shutdown. One shared world per server.</p>
+    </aside>
+    <section class="habitat-column">
+      <div class="panel habitat">
+        <div class="habitat-toolbar"><div class="panel-title"><h2>Habitat</h2><span id="dimensions" class="tag">72 × 44</span></div><div class="playback"><button id="play" class="primary">Pause</button><button id="step" title="Pause and advance one tick">+1</button><button id="step-many" title="Pause and advance 100 ticks">+100</button><select id="speed" aria-label="Simulation speed"><option value="10">10 ticks/s</option><option value="30" selected>30 ticks/s</option><option value="60">60 ticks/s</option><option value="120">120 ticks/s</option></select></div></div>
+        <div class="layer-bar" role="group" aria-label="Visualization layer">
+          <button class="active" data-layer="lineage">Ancestry</button><button data-layer="energy">Energy</button><button data-layer="food">Nutrients</button><button data-layer="a">Channel A</button><button data-layer="b">Channel B</button><button data-layer="waste">Waste</button>
+        </div>
+        <div class="world-wrap"><canvas id="world" width="1296" height="792" role="img" aria-label="Interactive artificial-life grid. Use Inspect a cell below for accessible cell details."></canvas><div class="world-overlay"><span id="world-state">LIVE SYSTEM</span><span id="actual-speed">— ticks/s</span></div><div id="extinct" hidden>Population extinct<span>No hidden reseeding. Start a new run to continue.</span></div></div>
+        <div class="world-caption"><span id="legend">Color = founder ancestry · brightness = integrity</span><label><input type="checkbox" id="adjacency"> Local adjacency</label></div>
+        <div class="tool-tray"><div class="field-label">INTERVENE</div><div class="tools" role="group" aria-label="World interaction tool">
+          <button class="active" data-tool="inspect">Inspect</button><button data-tool="food">Feed</button><button data-tool="damage">Damage</button><button data-tool="toxin">Toxin</button><button data-tool="erase">Remove</button><button data-tool="wall">Barrier</button><button data-tool="clear">Unblock</button><button data-tool="signalA">Pulse A</button><button data-tool="signalB">Pulse B</button>
+        </div><div class="brush-size"><label for="radius">Radius</label><input id="radius" type="range" min="1" max="10" value="3"><output id="radius-value">3</output></div></div>
+        <p class="canvas-help" id="canvas-help">Click a cell to inspect it. Pause for exact observations. All decisions use local state.</p>
+      </div>
+      <div class="panel timeline"><div class="panel-title"><h2>Population over time</h2><span id="history-range" class="muted">EVERY 10 TICKS</span></div><canvas id="history" width="1100" height="145" role="img" aria-label="Living cell population history"></canvas><div class="timeline-footer"><span id="history-start">0</span><span>Simulation tick · latest 600 samples</span><span id="history-end">0</span></div></div>
+      <div class="footnote"><span class="dot"></span><span>Designed local rules, emergent trajectories. This is not a model of consciousness or proof of open-ended evolution.</span></div>
+    </section>
+    <aside class="inspector-column">
+      <section class="panel inspector"><div class="panel-title"><h2>Cell inspector</h2><span class="section-num">02</span></div><div id="inspector-empty"><div class="cell-glyph" aria-hidden="true"><span></span></div><h3>One cell. Many decisions.</h3><p>Select a cell to inspect its inherited controller, local inputs, and current state.</p><button id="inspect-first">Inspect a living cell</button></div><div id="cell-detail" hidden></div></section>
+      <section class="panel diagnostics"><div class="panel-title"><h2>System checks</h2><span class="section-num">03</span></div><dl><div><dt>Energy residual</dt><dd id="residual">—</dd></div><div><dt>Mean integrity</dt><dd id="integrity">—</dd></div><div><dt>Connected patches</dt><dd id="clusters">—</dd></div><div><dt>Largest patch</dt><dd id="largest">—</dd></div><div><dt>Neighbor transfers</dt><dd id="transfers">—</dd></div></dl><p class="hint">Patches are adjacent cells, not identified organisms. Energy residual checks the model's accounting, not thermodynamic realism.</p></section>
+      <section class="panel log"><div class="panel-title"><h2>Lab notebook</h2><span class="section-num">04</span></div><div id="events" aria-label="Recent interventions"></div></section>
+    </aside>
+  </div>
+</main>
+<footer><span>SYMBIOSIS LAB <span class="muted">/ 0.1.0-alpha.1</span></span><span>Local-only by default · CPU simulation · No external APIs</span></footer>
+<div id="toast" role="status" hidden></div>
+<dialog id="guide"><div class="dialog-head"><span class="eyebrow">FIELD GUIDE</span><button id="guide-close" aria-label="Close field guide">Close ×</button></div><h2>Watch mechanisms, not just patterns.</h2><p>Each cell reads nearby food, waste, and chemical signals. A seven-input, seven-output controller regulates uptake, repair, division, emissions, movement, and sharing. Its 49 weights and 11 traits are copied, with possible mutation, when it divides.</p><div class="guide-flow">LOCAL FIELDS → RECEPTORS → CONTROLLER → ACTIONS → LOCAL FIELDS</div><h3>Three different kinds of change</h3><p><strong>Homeostasis:</strong> cells spend energy to maintain integrity. <strong>Adaptation:</strong> receptor gains change within a lifetime. <strong>Evolution:</strong> descendants inherit mutations and experience differential survival and reproduction. The controller topology itself does not evolve in this release.</p><h3>Try a controlled intervention</h3><p>Pause and save a checkpoint. Select a cell, switch to Channel A, and apply a Pulse A nearby. Advance 100 ticks and inspect its receptor gains and controller inputs. Restore the checkpoint and repeat with Chemical signaling switched off. The headless experiment command supports matched-seed runs across multiple seeds.</p><h3>Read the visualization carefully</h3><p>Colors track founder ancestry, not species. Lines show physical adjacency, not measured message traffic. A/B fields are abstract diffusing chemicals, not electrical nerves or a literal digital bus. Connected patches do not establish multicellular individuality.</p><h3>What is deliberately supplied?</h3><p>The initial cells, local decision scaffold, cell boundaries, two signal channels, reproduction machinery, and external resource source are designed. There is no spontaneous origin of life, learned morphogenesis, proven cooperation, or consciousness detector here. Cells never execute arbitrary code or contact the outside world.</p><h3>Persistence</h3><p>JSON checkpoints preserve the world, cells, histories, and random-generator state. Imports and restores pause the simulation. Replay is exact on the same runtime and model version; UI layer and playback speed are not biological state. Changing a setting alone is not evidence of improved fitness.</p></dialog>
+</body>
+</html>

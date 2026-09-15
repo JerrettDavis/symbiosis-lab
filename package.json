@@ -1,0 +1,33 @@
+{
+  "name": "symbiosis-lab",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "description": "An inspectable, deterministic artificial-life sandbox with evolvable local controllers.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-public.mjs",
+    "start": "node dist/server/index.js",
+    "dev": "npm run build && npm start",
+    "test": "npm run build && node --test",
+    "verify": "npm test && node scripts/smoke.mjs",
+    "experiment": "node dist/server/experiment.js",
+    "test:browser": "python scripts/browser-test.py",
+    "test:docker": "node scripts/docker-smoke.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.0",
+    "typescript": "7.0.2"
+  },
+  "repository": {
+    "url": "https://github.com/JerrettDavis/symbiosis-lab.git",
+    "type": "git"
+  },
+  "homepage": "https://github.com/JerrettDavis/symbiosis-lab#readme",
+  "bugs": {
+    "url": "https://github.com/JerrettDavis/symbiosis-lab/issues"
+  }
+}

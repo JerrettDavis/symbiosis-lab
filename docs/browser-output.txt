@@ -1,0 +1,5 @@
+UI: mounting desktop
+UI: mounted; checking state
+UI: stepping and inspecting
+IN-MEMORY HTTP BRIDGE (native navigation/download not tested). PASS: Chromium desktop/mobile; controls, real signal intervention, inspect, knockout, checkpoint, JSON export/import, help, pause/resume, reset, no JS errors or mobile overflow.
+Screenshots: /mnt/data/symbiosis-lab/docs/screenshots

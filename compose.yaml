@@ -1,0 +1,32 @@
+name: symbiosis-lab
+services:
+  lab:
+    build:
+      context: .
+      target: runtime
+    image: symbiosis-lab:local
+    init: true
+    ports:
+      - "127.0.0.1:${LAB_PORT:-8080}:8080"
+    environment:
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      DATA_DIR: /data
+      PAUSED: "${LAB_PAUSED:-false}"
+      AUTOSAVE: "true"
+    volumes:
+      - lab-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 2.0
+    restart: unless-stopped
+    stop_grace_period: 20s
+volumes:
+  lab-data:

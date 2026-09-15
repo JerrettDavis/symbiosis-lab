@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest a focused improvement or experiment.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or research question
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change and success criteria
+      description: Describe how we could test the result and any model assumptions.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

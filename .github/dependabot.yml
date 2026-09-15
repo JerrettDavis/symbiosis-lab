@@ -1,0 +1,44 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies, github-actions]
+    groups:
+      github-actions:
+        patterns: ['*']
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies]
+    groups:
+      npm:
+        patterns: ['*']
+      npm-security:
+        applies-to: security-updates
+        patterns: ['*']
+  - package-ecosystem: pip
+    directory: /scripts
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies]
+    groups:
+      browser-tests:
+        patterns: ['*']
+      browser-security:
+        applies-to: security-updates
+        patterns: ['*']
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    labels: [dependencies, docker]
+    groups:
+      container:
+        patterns: ['*']

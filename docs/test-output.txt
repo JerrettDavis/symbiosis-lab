@@ -1,0 +1,293 @@
+
+> symbiosis-lab@0.1.0-alpha.1 verify
+> npm test && node scripts/smoke.mjs
+
+
+> symbiosis-lab@0.1.0-alpha.1 test
+> npm run build && node --test
+
+
+> symbiosis-lab@0.1.0-alpha.1 build
+> tsc -p tsconfig.json && node scripts/copy-public.mjs
+
+TAP version 13
+# Subtest: health, live world view, static app and CSP are served
+ok 1 - health, live world view, static app and CSP are served
+  ---
+  duration_ms: 131.749971
+  type: 'test'
+  ...
+# Subtest: pause, exact step, speed and resume controls work
+ok 2 - pause, exact step, speed and resume controls work
+  ---
+  duration_ms: 230.386869
+  type: 'test'
+  ...
+# Subtest: inspect route returns a full genome or an explicit 404
+ok 3 - inspect route returns a full genome or an explicit 404
+  ---
+  duration_ms: 13.880897
+  type: 'test'
+  ...
+# Subtest: configuration and brush changes affect authoritative state
+ok 4 - configuration and brush changes affect authoritative state
+  ---
+  duration_ms: 20.131915
+  type: 'test'
+  ...
+# Subtest: checkpoint save and restore recovers exact engine state and pauses
+ok 5 - checkpoint save and restore recovers exact engine state and pauses
+  ---
+  duration_ms: 71.986557
+  type: 'test'
+  ...
+# Subtest: JSON export and import roundtrip, while malformed import leaves world unchanged
+ok 6 - JSON export and import roundtrip, while malformed import leaves world unchanged
+  ---
+  duration_ms: 39.350688
+  type: 'test'
+  ...
+# Subtest: cross-origin browser writes are rejected
+ok 7 - cross-origin browser writes are rejected
+  ---
+  duration_ms: 7.882849
+  type: 'test'
+  ...
+# Subtest: bad JSON, wrong content type, oversized commands and invalid payloads are rejected
+ok 8 - bad JSON, wrong content type, oversized commands and invalid payloads are rejected
+  ---
+  duration_ms: 20.271324
+  type: 'test'
+  ...
+# Subtest: reset uses named preset and requested seed, not previous tweaks
+ok 9 - reset uses named preset and requested seed, not previous tweaks
+  ---
+  duration_ms: 22.794864
+  type: 'test'
+  ...
+# Subtest: missing checkpoint and unknown API routes return 404
+ok 10 - missing checkpoint and unknown API routes return 404
+  ---
+  duration_ms: 8.755108
+  type: 'test'
+  ...
+# Subtest: static traversal cannot expose source or package files
+ok 11 - static traversal cannot expose source or package files
+  ---
+  duration_ms: 16.170035
+  type: 'test'
+  ...
+# Subtest: identical seeds reproduce the complete state
+ok 12 - identical seeds reproduce the complete state
+  ---
+  duration_ms: 332.712337
+  type: 'test'
+  ...
+# Subtest: different seeds produce different founder states
+ok 13 - different seeds produce different founder states
+  ---
+  duration_ms: 3.727585
+  type: 'test'
+  ...
+# Subtest: seed zero yields a live, replayable RNG
+ok 14 - seed zero yields a live, replayable RNG
+  ---
+  duration_ms: 0.341032
+  type: 'test'
+  ...
+# Subtest: JSON checkpoint resumes exact future, including RNG, order, genomes and histories
+ok 15 - JSON checkpoint resumes exact future, including RNG, order, genomes and histories
+  ---
+  duration_ms: 399.494987
+  type: 'test'
+  ...
+# Subtest: snapshot is an owned copy, not an alias
+ok 16 - snapshot is an owned copy, not an alias
+  ---
+  duration_ms: 2.081681
+  type: 'test'
+  ...
+# Subtest: restore does not alias input data
+ok 17 - restore does not alias input data
+  ---
+  duration_ms: 3.785697
+  type: 'test'
+  ...
+# Subtest: food diffusion conserves quantity at reflecting boundaries
+ok 18 - food diffusion conserves quantity at reflecting boundaries
+  ---
+  duration_ms: 0.941221
+  type: 'test'
+  ...
+# Subtest: barriers block diffusion, not just rendering
+ok 19 - barriers block diffusion, not just rendering
+  ---
+  duration_ms: 0.452489
+  type: 'test'
+  ...
+# Subtest: signal fields decay in an unoccupied world
+ok 20 - signal fields decay in an unoccupied world
+  ---
+  duration_ms: 4.926772
+  type: 'test'
+  ...
+# Subtest: nutrients are externally supplied and ledgered
+ok 21 - nutrients are externally supplied and ledgered
+  ---
+  duration_ms: 35.076303
+  type: 'test'
+  ...
+# Subtest: cell metabolism, divisions and deaths maintain the energy ledger
+ok 22 - cell metabolism, divisions and deaths maintain the energy ledger
+  ---
+  duration_ms: 242.038569
+  type: 'test'
+  ...
+# Subtest: manual feeding is ledgered, including saturation
+ok 23 - manual feeding is ledgered, including saturation
+  ---
+  duration_ms: 2.846618
+  type: 'test'
+  ...
+# Subtest: wall placement accounts for removed resources and cells
+ok 24 - wall placement accounts for removed resources and cells
+  ---
+  duration_ms: 27.898298
+  type: 'test'
+  ...
+# Subtest: removal recycles cell material and does not create energy
+ok 25 - removal recycles cell material and does not create energy
+  ---
+  duration_ms: 0.762577
+  type: 'test'
+  ...
+# Subtest: clearing a barrier does not spontaneously supply energy
+ok 26 - clearing a barrier does not spontaneously supply energy
+  ---
+  duration_ms: 1.346307
+  type: 'test'
+  ...
+# Subtest: damage reduces integrity, funded repair restores it
+ok 27 - damage reduces integrity, funded repair restores it
+  ---
+  duration_ms: 2.867047
+  type: 'test'
+  ...
+# Subtest: toxin injection affects integrity and behavior
+ok 28 - toxin injection affects integrity and behavior
+  ---
+  duration_ms: 11.392667
+  type: 'test'
+  ...
+# Subtest: same chemical signal is interpreted differently by different receptors
+ok 29 - same chemical signal is interpreted differently by different receptors
+  ---
+  duration_ms: 1.058152
+  type: 'test'
+  ...
+# Subtest: signaling knockout suppresses both sensing and secretion
+ok 30 - signaling knockout suppresses both sensing and secretion
+  ---
+  duration_ms: 1.295844
+  type: 'test'
+  ...
+# Subtest: receptor adaptation is bounded and changes with persistent input
+ok 31 - receptor adaptation is bounded and changes with persistent input
+  ---
+  duration_ms: 0.77157
+  type: 'test'
+  ...
+# Subtest: turning off adaptation freezes receptor gains
+ok 32 - turning off adaptation freezes receptor gains
+  ---
+  duration_ms: 0.924511
+  type: 'test'
+  ...
+# Subtest: zero mutation copies all inherited loci without aliasing
+ok 33 - zero mutation copies all inherited loci without aliasing
+  ---
+  duration_ms: 0.230692
+  type: 'test'
+  ...
+# Subtest: repeated mutation changes weights and traits but respects bounds
+ok 34 - repeated mutation changes weights and traits but respects bounds
+  ---
+  duration_ms: 1.159425
+  type: 'test'
+  ...
+# Subtest: offspring record correct ancestry and inherit exact genomes with mutation disabled
+ok 35 - offspring record correct ancestry and inherit exact genomes with mutation disabled
+  ---
+  duration_ms: 74.446022
+  type: 'test'
+  ...
+# Subtest: finite initial stores without external input do not support infinite growth
+ok 36 - finite initial stores without external input do not support infinite growth
+  ---
+  duration_ms: 333.049744
+  type: 'test'
+  ...
+# Subtest: extinction never silently reseeds
+ok 37 - extinction never silently reseeds
+  ---
+  duration_ms: 46.751442
+  type: 'test'
+  ...
+# Subtest: population, occupancy, bounds and accounting remain valid over multiple seeds
+ok 38 - population, occupancy, bounds and accounting remain valid over multiple seeds
+  ---
+  duration_ms: 324.215293
+  type: 'test'
+  ...
+# Subtest: snapshot rejects incompatible version, invalid dimensions and malformed arrays
+ok 39 - snapshot rejects incompatible version, invalid dimensions and malformed arrays
+  ---
+  duration_ms: 4.357899
+  type: 'test'
+  ...
+# Subtest: snapshot rejects non-finite values, invalid genes and cell collisions
+ok 40 - snapshot rejects non-finite values, invalid genes and cell collisions
+  ---
+  duration_ms: 4.281871
+  type: 'test'
+  ...
+# Subtest: snapshot rejects cells inside barriers
+ok 41 - snapshot rejects cells inside barriers
+  ---
+  duration_ms: 1.49003
+  type: 'test'
+  ...
+# Subtest: configuration validates types, ranges, unknown keys and immutable dimensions
+ok 42 - configuration validates types, ranges, unknown keys and immutable dimensions
+  ---
+  duration_ms: 1.776714
+  type: 'test'
+  ...
+# Subtest: bad intervention coordinates are rejected without changing the world
+ok 43 - bad intervention coordinates are rejected without changing the world
+  ---
+  duration_ms: 1.966446
+  type: 'test'
+  ...
+# Subtest: history and notebook retention are bounded
+ok 44 - history and notebook retention are bounded
+  ---
+  duration_ms: 350.030541
+  type: 'test'
+  ...
+# Subtest: the engine has no network, filesystem, random host state or process imports
+ok 45 - the engine has no network, filesystem, random host state or process imports
+  ---
+  duration_ms: 6.148634
+  type: 'test'
+  ...
+1..45
+# tests 45
+# suites 0
+# pass 45
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2631.09178
+PASS: actual server entrypoint, HTTP controls, persistent checkpoint and process restart.

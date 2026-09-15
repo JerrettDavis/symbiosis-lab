@@ -1,0 +1,15 @@
+node_modules/
+dist/
+data/*
+!data/.gitkeep
+.env
+*.log
+__pycache__/
+playwright-report/
+.remember/
+.env.*
+!.env.example
+*.zip
+BUILDINFO.json
+SHA256SUMS
+.venv/

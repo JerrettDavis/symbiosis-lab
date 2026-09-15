@@ -1,0 +1,31 @@
+{
+  "node": "v22.16.0",
+  "platform": "linux",
+  "arch": "x64",
+  "seed": 42,
+  "ticks": 12100,
+  "milliseconds": 7737.449923000001,
+  "metrics": {
+    "tick": 12100,
+    "population": 276,
+    "births": 3414,
+    "deaths": 3210,
+    "mutations": 9104,
+    "transfers": 148941,
+    "generation": 27,
+    "lineages": 3,
+    "traitSpread": 0.07595487874475523,
+    "meanEnergy": 7.328841118503009,
+    "meanIntegrity": 1,
+    "meanExpression": 0.9833136329252351,
+    "signalA": 0.01848787820623751,
+    "signalB": 0.032760936880965395,
+    "totalResource": 770.2685072327317,
+    "totalEnergy": 3345.028655939562,
+    "energyResidual": -0.000006088231657486176,
+    "clusters": 251,
+    "largestCluster": 4
+  },
+  "exactCheckpointReplay": true,
+  "stateSha256": "e97a394478dd911dc814b6acb1983eb80c00de290532add9bc2323b66250f097"
+}

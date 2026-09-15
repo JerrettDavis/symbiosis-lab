@@ -1,0 +1,17 @@
+
+> symbiosis-lab@0.1.0-alpha.1 experiment
+> node dist/server/experiment.js --seeds=1,7,42 --ticks=2000 --out=examples/experiments
+
+baseline         seed=1 tick=2000 population=274 births=730 mutations=2006 residual=3.82e-8
+signals-off      seed=1 tick=2000 population=346 births=807 mutations=2200 residual=-7.79e-9
+plasticity-off   seed=1 tick=2000 population=285 births=733 mutations=2027 residual=-5.47e-8
+mutation-off     seed=1 tick=2000 population=288 births=714 mutations=0 residual=-1.02e-7
+baseline         seed=7 tick=2000 population=300 births=720 mutations=1856 residual=6.27e-8
+signals-off      seed=7 tick=2000 population=346 births=800 mutations=2054 residual=8.80e-8
+plasticity-off   seed=7 tick=2000 population=297 births=733 mutations=1904 residual=7.45e-8
+mutation-off     seed=7 tick=2000 population=302 births=728 mutations=0 residual=3.34e-8
+baseline         seed=42 tick=2000 population=310 births=741 mutations=1962 residual=6.14e-8
+signals-off      seed=42 tick=2000 population=361 births=803 mutations=2123 residual=-8.43e-9
+plasticity-off   seed=42 tick=2000 population=283 births=747 mutations=2051 residual=1.16e-8
+mutation-off     seed=42 tick=2000 population=297 births=749 mutations=0 residual=-4.28e-9
+Saved 12 matched-initial-state runs to /mnt/data/symbiosis-lab/examples/experiments. These are descriptive ablations, not proof of open-ended evolution or cooperation.
