@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM node:24-bookworm-slim AS build
+FROM node:26-bookworm-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
@@ -10,7 +10,7 @@ COPY scripts/copy-public.mjs ./scripts/copy-public.mjs
 COPY tests ./tests
 RUN npm run build && node --test tests/*.test.mjs
 
-FROM node:24-bookworm-slim AS runtime
+FROM node:26-bookworm-slim AS runtime
 ENV NODE_ENV=production PORT=8080 HOST=0.0.0.0 DATA_DIR=/data
 WORKDIR /app
 RUN mkdir -p /data && chown node:node /data
