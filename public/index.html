@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#101715"><title>Symbiosis Lab | Artificial life sandbox</title>
-  <link rel="icon" href="/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css">
-  <script type="module" src="/web/app.js"></script>
+  <link rel="icon" href="./mark.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+  <script type="module" src="./web/app.js"></script>
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="/" aria-label="Symbiosis home"><img src="/mark.svg" alt="" width="36" height="36"><span>symbiosis<span class="brand-suffix"> / lab</span></span></a>
+  <a class="brand" href="./" aria-label="Symbiosis home"><img src="./mark.svg" alt="" width="36" height="36"><span>symbiosis<span class="brand-suffix"> / lab</span></span></a>
   <div class="top-meta"><span class="version">ARTIFICIAL LIFE · ALPHA 0.1</span><button id="guide-open" class="quiet">Field guide <span aria-hidden="true">↗</span></button><span class="status" id="connection" role="status">Connecting</span></div>
 </header>
 <main>
@@ -40,7 +40,7 @@
       <div class="divider"></div>
       <div class="field-label">CHECKPOINTS</div>
       <div class="button-pair"><button id="save">Save</button><button id="load">Restore</button></div>
-      <div class="button-pair"><a class="button quiet" href="/api/snapshot" download>Export JSON ↗</a><button id="import" class="quiet">Import JSON ↙</button><input type="file" id="snapshot-file" accept=".json,application/json" hidden></div>
+      <div class="button-pair"><a id="export" class="button quiet" href="./api/snapshot" download>Export JSON ↗</a><button id="import" class="quiet">Import JSON ↙</button><input type="file" id="snapshot-file" accept=".json,application/json" hidden></div>
       <p class="hint" id="save-note">Autosaves every 30 seconds and on graceful shutdown. One shared world per server.</p>
     </aside>
     <section class="habitat-column">
@@ -66,7 +66,7 @@
     </aside>
   </div>
 </main>
-<footer><span>SYMBIOSIS LAB <span class="muted">/ 0.1.0-alpha.1</span></span><span>Local-only by default · CPU simulation · No external APIs</span></footer>
+<footer><span>SYMBIOSIS LAB <span class="muted">/ 0.1.0-alpha.1</span></span><span id="runtime-note">Local-only by default · CPU simulation · No external APIs</span></footer>
 <div id="toast" role="status" hidden></div>
 <dialog id="guide"><div class="dialog-head"><span class="eyebrow">FIELD GUIDE</span><button id="guide-close" aria-label="Close field guide">Close ×</button></div><h2>Watch mechanisms, not just patterns.</h2><p>Each cell reads nearby food, waste, and chemical signals. A seven-input, seven-output controller regulates uptake, repair, division, emissions, movement, and sharing. Its 49 weights and 11 traits are copied, with possible mutation, when it divides.</p><div class="guide-flow">LOCAL FIELDS → RECEPTORS → CONTROLLER → ACTIONS → LOCAL FIELDS</div><h3>Three different kinds of change</h3><p><strong>Homeostasis:</strong> cells spend energy to maintain integrity. <strong>Adaptation:</strong> receptor gains change within a lifetime. <strong>Evolution:</strong> descendants inherit mutations and experience differential survival and reproduction. The controller topology itself does not evolve in this release.</p><h3>Try a controlled intervention</h3><p>Pause and save a checkpoint. Select a cell, switch to Channel A, and apply a Pulse A nearby. Advance 100 ticks and inspect its receptor gains and controller inputs. Restore the checkpoint and repeat with Chemical signaling switched off. The headless experiment command supports matched-seed runs across multiple seeds.</p><h3>Read the visualization carefully</h3><p>Colors track founder ancestry, not species. Lines show physical adjacency, not measured message traffic. A/B fields are abstract diffusing chemicals, not electrical nerves or a literal digital bus. Connected patches do not establish multicellular individuality.</p><h3>What is deliberately supplied?</h3><p>The initial cells, local decision scaffold, cell boundaries, two signal channels, reproduction machinery, and external resource source are designed. There is no spontaneous origin of life, learned morphogenesis, proven cooperation, or consciousness detector here. Cells never execute arbitrary code or contact the outside world.</p><h3>Persistence</h3><p>JSON checkpoints preserve the world, cells, histories, and random-generator state. Imports and restores pause the simulation. Replay is exact on the same runtime and model version; UI layer and playback speed are not biological state. Changing a setting alone is not evidence of improved fitness.</p></dialog>
 </body>
