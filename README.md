@@ -5,9 +5,29 @@
 
 **0.1.0-alpha.1 | An inspectable artificial-life sandbox**
 
-Local rules. Collective behavior. A Dockerized, CPU-only simulation of cells that acquire resources, emit and interpret signals, maintain themselves, reproduce, and inherit mutations. The browser exposes the mechanism, not just an animation.
+Local rules. Collective behavior. A CPU-only simulation of cells that acquire resources, emit and interpret signals, maintain themselves, reproduce, and inherit mutations. The browser exposes the mechanism, not just an animation.
+
+**[Launch the browser demo →](https://jerrettdavis.github.io/symbiosis-lab/)** — no installation, accounts, API keys, or backend required.
 
 ![Actual running interface at seed 42, tick 250](docs/screenshots/overview.png)
+
+## Run in your browser
+
+Open **https://jerrettdavis.github.io/symbiosis-lab/**. The full simulation engine runs in a Web Worker, with the same cell inspector, interventions, presets, controls, and JSON import/export as the server version. It starts running immediately; use **Pause** and **+100** for controlled observations.
+
+Each tab owns an independent world. Save/Restore and the 30-second autosave use IndexedDB in this browser; tabs on this site share the latest saved checkpoint. Reload restores that checkpoint paused. Closing the tab stops its simulation, and background tabs may be throttled. Use **Save** before closing and **Export JSON** for a portable backup: clearing site data or private browsing can remove checkpoints. If browser storage is unavailable, the simulation and JSON export still work and the save error is shown.
+
+To serve the static demo locally:
+
+```sh
+npm ci
+npm run build:pages
+python -m http.server 8080 --directory dist/pages
+```
+
+Open **http://localhost:8080**. Serve over HTTP rather than opening `index.html` as a file. The compiled static artifact is `dist/pages/`; its relative asset paths also work under a project subpath. After the page loads, controls and simulation need no network connection; offline reload is not provided.
+
+The [Pages workflow](.github/workflows/pages.yml) builds and tests the static app on pull requests, then publishes it on pushes to `main`. Repository Settings → Pages must use **GitHub Actions** as the source. The repository About website links to the demo.
 
 ## Run with Docker
 
@@ -65,7 +85,7 @@ npm run dev
 | Repeatability | Full-precision JSON checkpoint, seeded PRNG, exact resumed evolution on the same runtime/model |
 | Persistence | Autosave every 30 seconds while dirty, manual save, JSON import/export, and graceful-shutdown save |
 
-There is one authoritative world per server. All browser tabs control the same world. The simulation keeps running when the browser is closed. Extinction is real: **the engine never secretly reseeds the world**.
+In Docker/Node mode, there is one authoritative world per server. All browser tabs control the same world, and it keeps running when the browser is closed. In the Pages demo, each tab runs its own world and closing it stops that simulation. Both modes use the same engine and checkpoint format. Extinction is real: **the engine never secretly reseeds the world**.
 
 ## First five minutes
 
@@ -112,6 +132,8 @@ Optional browser checks:
 python -m pip install -r scripts/requirements-test.txt
 python -m playwright install chromium
 npm run test:browser
+npm run build:pages
+npm run test:pages
 ```
 
 Optional container checks, requiring a running Docker daemon:

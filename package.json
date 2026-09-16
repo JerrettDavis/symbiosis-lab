@@ -10,6 +10,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/copy-public.mjs",
+    "build:pages": "npm run build && node scripts/build-pages.mjs",
+    "test:pages": "python scripts/pages-test.py",
     "start": "node dist/server/index.js",
     "dev": "npm run build && npm start",
     "test": "npm run build && node --test",
@@ -26,7 +28,7 @@
     "url": "https://github.com/JerrettDavis/symbiosis-lab.git",
     "type": "git"
   },
-  "homepage": "https://github.com/JerrettDavis/symbiosis-lab#readme",
+  "homepage": "https://jerrettdavis.github.io/symbiosis-lab/",
   "bugs": {
     "url": "https://github.com/JerrettDavis/symbiosis-lab/issues"
   }

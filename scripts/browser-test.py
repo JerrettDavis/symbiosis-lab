@@ -61,10 +61,10 @@ def run() -> None:
                             return {'status': response.code, 'body': response.read().decode()}
                     target.expose_binding('__lab_request', bridge)
                     html = (ROOT / 'dist/public/index.html').read_text()
-                    html = re.sub(r'<script[^>]*src="/web/app.js"[^>]*></script>', '', html)
+                    html = re.sub(r'<script[^>]*src="\.?/web/app.js"[^>]*></script>', '', html)
                     html = re.sub(r'<link[^>]*>', '', html)
                     svg = base64.b64encode((ROOT / 'public/mark.svg').read_bytes()).decode()
-                    html = html.replace('src="/mark.svg"', 'src="data:image/svg+xml;base64,' + svg + '"')
+                    html = html.replace('src="./mark.svg"', 'src="data:image/svg+xml;base64,' + svg + '"')
                     target.set_content(html, wait_until='domcontentloaded')
                     target.add_style_tag(content=(ROOT / 'dist/public/style.css').read_text())
                     target.evaluate("""() => { window.fetch = async (url, init = {}) => {
@@ -111,7 +111,7 @@ def run() -> None:
                     path.write_text(json.dumps(get('/api/snapshot')))
                 else:
                     with page.expect_download() as download:
-                        page.locator('a[href="/api/snapshot"]').click()
+                        page.locator('#export').click()
                     download.value.save_as(path)
                 assert json.loads(path.read_text()) == saved
                 page.locator('#step').click(); expect(page.locator('#tick')).to_have_text('000,201')

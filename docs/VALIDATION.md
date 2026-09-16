@@ -6,7 +6,7 @@
 is the source of current verification results. Every push to `main` and pull request runs:
 
 - Node 22, 24, and 26 on Ubuntu and Windows: clean `npm ci`, strict compilation,
-  45 engine/HTTP tests, real-process persistence/restart smoke, and `npm audit`.
+  engine/HTTP/browser-runtime tests, real-process persistence/restart smoke, and `npm audit`.
 - Native Chromium navigation on desktop/mobile: controls, signal intervention,
   inspection, knockout, checkpoints, JSON download/import, help, and layout checks.
 - Docker image build and Compose startup, health, checkpoint persistence, and exact restart recovery.
@@ -16,6 +16,12 @@ is the source of current verification results. Every push to `main` and pull req
 The `Required checks` job succeeds only when every verification job passes. Inspect
 the run for the commit you use; a historical green run does not certify later code.
 Release artifacts record the source commit in `BUILDINFO.json`.
+
+## Browser-only Pages demo
+
+The [Pages workflow](../.github/workflows/pages.yml) builds `dist/pages`, runs the Node suite (including exact browser-engine checkpoint replay and storage-failure handling), and exercises the actual static app in Chromium under `/symbiosis-lab/`. The browser check covers the worker, all brushes and visualization layers, pause/step/resume/speed/reset, inspection, config changes, JSON download/import and invalid import preservation, IndexedDB reload recovery, independent tab state, mobile layout, and continued operation with networking disabled after initial load. It rejects page errors and any `/api/` network requests. Deployment runs only after these checks succeed.
+
+Run `npm run build:pages && npm run test:pages` locally after installing the browser-test requirements above. Set `PAGES_URL=https://jerrettdavis.github.io/symbiosis-lab/` to run the same checks against the published site. Test checkpoints live only in an isolated browser context.
 
 ## Original archive observations
 

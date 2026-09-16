@@ -5,12 +5,15 @@ const $ = <T extends HTMLElement = HTMLElement>(id: string): T => document.getEl
 const text = (id: string, value: string | number) => { $(id).textContent = String(value); };
 const escape = (value: string) => value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));
 const nf = new Intl.NumberFormat('en-US');
+const browserMode = document.documentElement.dataset.runtime === 'browser';
+const browserRequest = browserMode ? (await import('./browser-client.js')).createBrowserClient() : null;
 let state: State | null = null, selected: number | null = null, layer = 'lineage', tool = 'inspect', radius = 3;
 let hover: [number,number] | null = null, dragging = false, lastBrush = 0, fetching = false, cellFetching = false;
 let toastTimer = 0, eventKey = '', cellKey = '', commandQueue = Promise.resolve();
 const canvas = $<HTMLCanvasElement>('world'), ctx = canvas.getContext('2d')!, chart = $<HTMLCanvasElement>('history'), chartCtx = chart.getContext('2d')!;
 function toast(message: string, error = false) { const t=$('toast');t.textContent=message;t.classList.toggle('error',error);t.hidden=false;window.clearTimeout(toastTimer);toastTimer=window.setTimeout(()=>t.hidden=true,5000); }
 async function request<T>(url: string, data?: unknown): Promise<T> {
+  if (browserRequest) return browserRequest<T>(url, data);
   const response = await fetch(url, data === undefined ? {cache:'no-store'} : {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
   const result = await response.json(); if (!response.ok) throw Object.assign(new Error(result.error ?? `HTTP ${response.status}`), {status:response.status}); return result as T;
 }
@@ -113,6 +116,20 @@ $('reset').onclick=()=>{if(!confirm('Replace the current world? Export or save a
 action('save',()=>request('/api/checkpoint',{action:'save'}),'Checkpoint saved.');
 action('load',async()=>{if(!confirm('Replace this world with the last saved checkpoint?'))return;selected=null;cellKey='';$('cell-detail').hidden=true;$('inspector-empty').hidden=false;await request('/api/checkpoint',{action:'load'});},'Checkpoint action complete.');
 $('import').onclick=()=>$<HTMLInputElement>('snapshot-file').click();
+if (browserMode) {
+  text('runtime-note', 'Runs in your browser · Independent world per tab · No server required');
+  text('save-note', 'Saved in this browser every 30 seconds after changes. Tabs share the latest checkpoint; export JSON to keep a separate copy. Closing this tab stops its world.');
+  $('export').onclick = async event => {
+    event.preventDefault();
+    try {
+      const snapshot = await request<import('../engine/types.js').Snapshot>('/api/snapshot');
+      const url = URL.createObjectURL(new Blob([JSON.stringify(snapshot)], { type: 'application/json' }));
+      const link = document.createElement('a'); link.href = url;
+      link.download = `symbiosis-seed${snapshot.config.seed}-tick${snapshot.tick}.json`;
+      link.click(); setTimeout(() => URL.revokeObjectURL(url), 10000);
+    } catch (error) { toast(error instanceof Error ? error.message : String(error), true); }
+  };
+}
 $('snapshot-file').onchange=async()=>{const input=$<HTMLInputElement>('snapshot-file'),file=input.files?.[0];if(!file)return;try{if(file.size>16*1024*1024)throw new Error('Snapshot exceeds 16 MiB');if(!confirm('Import this snapshot and replace the current world?'))return;await request('/api/snapshot',JSON.parse(await file.text()));selected=null;cellKey='';$('cell-detail').hidden=true;$('inspector-empty').hidden=false;toast('Snapshot imported. World is paused.');await refresh();}catch(e){toast(String(e instanceof Error?e.message:e),true);}finally{input.value='';}};
 const legends:Record<string,string>={lineage:'Color = founder ancestry · brightness = integrity',energy:'Cell color: low energy (red) → high energy (green)',food:'Nutrient field: 0 → 4 resource units / site',a:'Channel A: 0 → 0.35 signal units / site',b:'Channel B: 0 → 0.35 signal units / site',waste:'Waste field: 0 → 1.5 concentration units / site'};
 for(const b of document.querySelectorAll<HTMLButtonElement>('[data-layer]'))b.onclick=()=>{layer=b.dataset.layer!;document.querySelectorAll('[data-layer]').forEach(x=>x.classList.toggle('active',x===b));text('legend',legends[layer]);renderWorld();};
